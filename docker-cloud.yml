@@ -31,16 +31,17 @@ mysql:
 
 # edX services
 credentials:
-  command: /edx/app/credentials/devstack.sh start
-  hostname: edx.devstack.credentials
+  command: python manage.py runserver 0.0.0.0:8000
   environment:
+    CACHE_LOCATION: memcached:11211
+    DB_HOST: mysql
     ENABLE_DJANGO_TOOLBAR: 1
-  image: edxops/credentials:devstack
+  image: clintonb/credentials:slim
   links:
     - memcached
     - mysql
   ports:
-    - "18150:18150"
+    - "18150:8000"
 
 discovery:
   command: /edx/app/discovery/devstack.sh start
